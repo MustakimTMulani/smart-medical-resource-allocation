@@ -1,0 +1,16 @@
+algorithm_name,number_of_items,budget,execution_time_seconds,memory_consumption_bytes,total_cost,total_priority,is_optimal,status
+Divide and Conquer,10,160,0.000075133,3066.67,139,287,True,completed
+Greedy,10,160,0.000041667,3026.67,130,286,False,completed
+Dynamic Programming,10,160,0.000286733,18434.67,139,287,True,completed
+Divide and Conquer,15,226,0.001069667,3496.00,226,431,True,completed
+Greedy,15,226,0.000028267,4010.67,226,431,True,completed
+Dynamic Programming,15,226,0.000542000,45744.00,226,431,True,completed
+Divide and Conquer,20,335,,,,,,skipped: safety cap is 18 items
+Greedy,20,335,0.000037233,5720.00,328,512,False,completed
+Dynamic Programming,20,335,0.001061100,92232.00,333,527,True,completed
+Divide and Conquer,25,377,,,,,,skipped: safety cap is 18 items
+Greedy,25,377,0.000043733,6256.00,369,805,True,completed
+Dynamic Programming,25,377,0.001500933,170912.00,369,805,True,completed
+Divide and Conquer,30,488,,,,,,skipped: safety cap is 18 items
+Greedy,30,488,0.000049600,6920.00,474,1005,False,completed
+Dynamic Programming,30,488,0.002365800,275632.00,488,1010,True,completed
