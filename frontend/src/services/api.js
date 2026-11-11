@@ -54,6 +54,11 @@ export function compareAlgorithms(resources, budget) {
   })
 }
 
+/** Read saved backend benchmark CSV results; this does not start a benchmark. */
+export function fetchBenchmarks() {
+  return request('/api/algorithms/benchmarks')
+}
+
 export function fetchResource(resourceId) {
   return request(`/api/resources/${encodeURIComponent(resourceId)}`)
 }

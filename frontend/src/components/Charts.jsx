@@ -28,9 +28,9 @@ export function ComparisonChart({ labels, datasets, unit = 'ms', beginAtZero = t
   return <Bar data={data} options={options} />
 }
 
-export function QualityChart({ labels, datasets }) {
+export function QualityChart({ labels, datasets, min = 0, max = 100 }) {
   const palette = [colors.blue, colors.slate, colors.teal]
   const data = { labels, datasets: datasets.map((dataset, index) => ({ label: dataset.label, data: dataset.data, borderColor: palette[index], backgroundColor: palette[index], pointRadius: 2, pointHoverRadius: 4, tension: .3 })) }
-  const options = { responsive: true, maintainAspectRatio: false, plugins: { legend, tooltip }, scales: { x: { grid: { display: false }, border: { display: false }, ticks: { color: colors.text, font: { size: 10 } } }, y: { min: 70, max: 100, border: { display: false }, grid: { color: colors.grid }, ticks: { color: colors.text, font: { size: 10 }, callback: (value) => `${value}%` } } } }
+  const options = { responsive: true, maintainAspectRatio: false, plugins: { legend, tooltip }, scales: { x: { grid: { display: false }, border: { display: false }, ticks: { color: colors.text, font: { size: 10 } } }, y: { min, max, border: { display: false }, grid: { color: colors.grid }, ticks: { color: colors.text, font: { size: 10 }, callback: (value) => `${value}%` } } } }
   return <Line data={data} options={options} />
 }

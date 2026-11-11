@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database.connection import initialize_database
+from app.routes.benchmarks import router as benchmarks_router
 from app.routes.algorithms import router as algorithms_router
 from app.routes.inventory import router as inventory_router
 
@@ -31,6 +32,7 @@ app.add_middleware(
 
 app.include_router(inventory_router)
 app.include_router(algorithms_router)
+app.include_router(benchmarks_router)
 
 
 @app.get("/", tags=["Health"])
