@@ -99,3 +99,22 @@
 .complexity-note strong{color:#334155}
 @media(max-width:760px){.complexity-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.performance-banner .benchmark-refresh{margin-left:auto}.performance-stat-text{font-size:13px!important}.performance-state{min-height:220px;padding:18px 14px}}
+
+/* Inventory stock levels and shortage indicators */
+.stock-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stock-overview>div{display:grid;gap:5px;padding:11px 13px;border:1px solid var(--border);border-radius:7px;background:#fff}
+.stock-overview span{color:var(--muted);font-size:9px}
+.stock-overview strong{color:#334155;font-size:16px;font-weight:650}
+.stock-overview .has-shortage strong{color:#A16207}
+.stock-level-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;font-size:9px;font-weight:650;white-space:nowrap}
+.stock-level-low{color:#92400E;background:#FEF3C7}
+.stock-level-sufficient{color:#0F766E;background:#F0FDFA}
+.shortage-value{color:#A16207;font-weight:650}
+.stock-zero{color:#94A3B8;font-weight:500}
+.low-stock-row{background:#FFFCF5}
+.low-stock-row:hover{background:#FFFAEB!important}
+.inventory-stock-table{min-width:1050px}
+.filter-controls{flex-wrap:wrap}
+.resource-form label small{color:var(--muted);font-size:9px;font-weight:400;line-height:1.4}
+@media(max-width:760px){.stock-overview{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.stock-overview{gap:7px}.stock-overview>div{padding:9px}.stock-overview strong{font-size:14px}.filter-controls{grid-template-columns:1fr 1fr}.inventory-stock-table{min-width:1010px}}

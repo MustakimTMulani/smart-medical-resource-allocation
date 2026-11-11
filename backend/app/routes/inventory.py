@@ -4,16 +4,28 @@ import sqlite3
 
 from fastapi import APIRouter, HTTPException, Response, status
 
-from app.models.resource import ResourceCreate, ResourceResponse, ResourceUpdate
+from app.models.resource import (
+    InventorySummaryResponse,
+    ResourceCreate,
+    ResourceResponse,
+    ResourceUpdate,
+)
 from app.services.inventory import (
     add_resource,
     find_resource,
+    get_inventory_summary,
     list_resources,
     remove_resource,
     replace_resource,
 )
 
 router = APIRouter(prefix="/api/resources", tags=["Medical inventory"])
+
+
+@router.get("/summary", response_model=InventorySummaryResponse)
+def get_resource_summary() -> dict[str, int]:
+    """Return inventory stock and shortage totals."""
+    return get_inventory_summary()
 
 
 @router.get("", response_model=list[ResourceResponse])

@@ -43,6 +43,10 @@ export function fetchResources() {
   return request('/api/resources')
 }
 
+export function fetchInventorySummary() {
+  return request('/api/resources/summary')
+}
+
 /** Compare the selected resources with the three backend knapsack algorithms. */
 export function compareAlgorithms(resources, budget) {
   return request('/api/algorithms/compare', {

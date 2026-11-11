@@ -31,7 +31,14 @@ def get_connection() -> Iterator[sqlite3.Connection]:
 
 
 def initialize_database() -> None:
-    """Create the table and seed starter data only when the table is empty."""
+    """Create or migrate the table and seed only an empty inventory.
+
+    Legacy ``quantity`` values are copied into ``current_stock`` when that
+    column is first added. Existing records receive ``minimum_stock = 0`` as a
+    conservative default, so no unverified shortage threshold is invented.
+    Starter rows are illustrative; their current stock mirrors their legacy
+    quantity field and their minimum stock starts at zero.
+    """
     starter_rows = [
         ("MED-001", "ICU ventilator", 185000, 98, "Critical care", "Available", 8, "Critical care"),
         ("MED-002", "Patient monitor", 72000, 91, "Monitoring", "Available", 14, "ICU"),
@@ -52,14 +59,31 @@ def initialize_database() -> None:
                 category TEXT NOT NULL,
                 status TEXT NOT NULL CHECK(status IN ('Available', 'Allocated', 'Maintenance')),
                 quantity INTEGER NOT NULL CHECK(quantity >= 0),
-                location TEXT NOT NULL
+                location TEXT NOT NULL,
+                current_stock INTEGER NOT NULL DEFAULT 0 CHECK(current_stock >= 0),
+                minimum_stock INTEGER NOT NULL DEFAULT 0 CHECK(minimum_stock >= 0)
             )"""
         )
+        columns = {
+            row["name"]
+            for row in connection.execute("PRAGMA table_info(resources)").fetchall()
+        }
+        if "current_stock" not in columns:
+            connection.execute(
+                "ALTER TABLE resources ADD COLUMN current_stock INTEGER NOT NULL DEFAULT 0 CHECK(current_stock >= 0)"
+            )
+            # Existing quantity is the closest available source for current stock.
+            connection.execute("UPDATE resources SET current_stock = quantity")
+        if "minimum_stock" not in columns:
+            connection.execute(
+                "ALTER TABLE resources ADD COLUMN minimum_stock INTEGER NOT NULL DEFAULT 0 CHECK(minimum_stock >= 0)"
+            )
         count = connection.execute("SELECT COUNT(*) FROM resources").fetchone()[0]
         if count == 0:
             connection.executemany(
                 """INSERT INTO resources
-                   (id, name, cost, priority, category, status, quantity, location)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-                starter_rows,
+                   (id, name, cost, priority, category, status, quantity, location,
+                    current_stock, minimum_stock)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                [(*row, row[6], 0) for row in starter_rows],
             )
