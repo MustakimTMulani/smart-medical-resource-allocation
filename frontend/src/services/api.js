@@ -43,6 +43,17 @@ export function fetchResources() {
   return request('/api/resources')
 }
 
+/** Compare the selected resources with the three backend knapsack algorithms. */
+export function compareAlgorithms(resources, budget) {
+  return request('/api/algorithms/compare', {
+    method: 'POST',
+    body: JSON.stringify({
+      resources: resources.map(({ id, name, cost, priority }) => ({ id, name, cost, priority })),
+      budget,
+    }),
+  })
+}
+
 export function fetchResource(resourceId) {
   return request(`/api/resources/${encodeURIComponent(resourceId)}`)
 }
